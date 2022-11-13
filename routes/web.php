@@ -1,7 +1,8 @@
 <?php
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BanghayController;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,24 +16,16 @@ use App\Http\Controllers\BanghayController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
 
-Route::get('/banghay', [BanghayController::class, 'index']);
-Route::post('/uploadfile', [BanghayController::class, 'store']);
-Route::get('/show', [BanghayController::class, 'show']);
-Route::get('/download/{file}', [BanghayController::class, 'download']);
-Route::get('/preview/{id}', [BanghayController::class, 'preview']);
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-
-
-Route::get('/banghay/gradeone', [BanghayController::class, 'gradeone']);
-Route::get('/banghay/gradetwo', [BanghayController::class, 'gradetwo']);
-Route::get('/banghay/gradethree', [BanghayController::class, 'gradethree']);
-Route::get('/banghay/gradefour', [BanghayController::class, 'gradefour']);
-Route::get('/banghay/gradefive', [BanghayController::class, 'gradefive']);
-Route::get('/banghay/gradesix', [BanghayController::class, 'gradesix']);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+require __DIR__.'/auth.php';

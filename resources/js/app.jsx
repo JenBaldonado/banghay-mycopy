@@ -1,18 +1,22 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
+import './bootstrap';
+import '../css/app.css';
 
-import "./bootstrap";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { createInertiaApp } from '@inertiajs/inertia-react';
+import { InertiaProgress } from '@inertiajs/progress';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-import ReactDOM from "react-dom/client";
-import Home from "./components/Home";
+createInertiaApp({
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.jsx`, import.meta.glob('./Pages/**/*.jsx')),
+    setup({ el, App, props }) {
+        const root = createRoot(el);
 
-ReactDOM.createRoot(document.getElementById("app")).render(<Home />);
+        root.render(<App {...props} />);
+    },
+});
+
+InertiaProgress.init({ color: '#4B5563' });
