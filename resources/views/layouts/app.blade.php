@@ -16,7 +16,7 @@
 
     <!-- Scripts -->
     @viteReactRefresh
-    @vite(['resources/js/app.js'])
+    @vite('resources/js/app.jsx')
 </head>
 
 <body>
