@@ -12,12 +12,7 @@ import "./bootstrap";
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import App from "./components/App";
-import React from "react";
-import ReactDom from "react-dom";
+import ReactDOM from "react-dom/client";
+import Home from "./components/Home";
 
-if (document.getElementById('app')) {
-  ReactDom.render{<App />,document.getElementById('app')};
-}
-
-
+ReactDOM.createRoot(document.getElementById("app")).render(<Home />);
