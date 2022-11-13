@@ -16,7 +16,9 @@
 ') }}" rel="stylesheet" type="text/css">
   <link href="{{ asset('css/styles.css') }}" rel="stylesheet" type="text/css">
 
-
+  <!-- Scripts -->
+  @viteReactRefresh
+  @vite(['resources/sass/app.scss', 'resources/js/app.jsx'])
 
 </head>
 
