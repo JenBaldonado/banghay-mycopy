@@ -16,19 +16,27 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/banghay', [BanghayController::class, 'index'])->middleware('auth');
+Route::post('/uploadfile', [BanghayController::class, 'store'])->middleware('auth');
+Route::get('/show', [BanghayController::class, 'show'])->middleware('auth');
+Route::get('/download/{file}', [BanghayController::class, 'download']);
+Route::get('/preview/{id}', [BanghayController::class, 'preview']);
 
-require __DIR__.'/auth.php';
+
+
+Route::get('/banghay/gradeone', [BanghayController::class, 'gradeone'])->middleware('auth');
+Route::get('/banghay/gradetwo', [BanghayController::class, 'gradetwo'])->middleware('auth');
+Route::get('/banghay/gradethree', [BanghayController::class, 'gradethree'])->middleware('auth');
+Route::get('/banghay/gradefour', [BanghayController::class, 'gradefour'])->middleware('auth');
+Route::get('/banghay/gradefive', [BanghayController::class, 'gradefive'])->middleware('auth');
+Route::get('/banghay/gradesix', [BanghayController::class, 'gradesix'])->middleware('auth');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
